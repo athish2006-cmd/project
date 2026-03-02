@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX Item List</title>
+    <style>
+        body {
+            font-family: Arial;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px;
+        }
+
+        .left {
+            width: 30%;
+        }
+
+        .right {
+            width: 60%;
+            text-align: center;
+        }
+
+        input {
+            padding: 6px;
+            width: 200px;
+        }
+
+        button {
+            padding: 6px 10px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>AJAX Item List</h1>
+
+<div class="container">
+    <div class="left">
+        <ul id="itemList">
+            <!-- User items will appear here -->
+        </ul>
+    </div>
+
+    <div class="right">
+        <input type="text" id="itemInput" placeholder="Enter an item">
+        <button onclick="addItem()">Add Item</button>
+    </div>
+</div>
+
+<script>
+function addItem() {
+    const inputBox = document.getElementById("itemInput");
+    const itemValue = inputBox.value;
+
+    if (itemValue.trim() === "") {
+        return;
+    }
+
+    fetch("/add_item", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ item: itemValue })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            const list = document.getElementById("itemList");
+            const li = document.createElement("li");
+            li.textContent = data.item;
+            list.appendChild(li);
+            inputBox.value = "";
+        }
+    });
+}
+</script>
+
+</body>
+</html>
