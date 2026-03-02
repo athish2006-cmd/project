@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fruit Price Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome, {{ name }}!</h1>
+    <p>Current time: {{ time }}</p>
+
+    <h2>Fruit Price List</h2>
+
+    <table>
+        <tr>
+            <th>Fruit Name</th>
+            <th>Price ($)</th>
+            <th>color</th>
+        </tr>
+
+        {% for fruit in fruits %}
+        <tr>
+            <td>{{ fruit.name }}</td>
+            <td>{{ "%.2f"|format(fruit.price) }}</td>
+            <td>{{ fruit.color }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
